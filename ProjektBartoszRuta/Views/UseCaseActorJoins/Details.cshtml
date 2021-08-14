@@ -1,0 +1,42 @@
+﻿@model ProjektBartoszRuta.Models.UseCaseActorJoin
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UseCaseActorJoin</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Actor.UseCaseDiagramID)
+        </dt>
+
+        <dd>
+            @Html.ActionLink(Model.Actor.UseCaseDiagram.Name, "Details", "UseCaseDiagrams", new { id = Model.Actor.UseCaseDiagramID }, null)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Actor.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Actor.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UseCase.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UseCase.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

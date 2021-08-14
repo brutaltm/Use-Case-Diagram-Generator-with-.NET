@@ -1,0 +1,161 @@
+﻿@model ProjektBartoszRuta.Models.UseCaseDiagram
+
+@{
+    ViewBag.Title = "Details";
+    var image = "diagramLarge" + Model.ID + ".png";
+    var pdf = "diagram" + Model.ID + ".pdf";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UseCaseDiagram</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Profile.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Profile.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedAt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsGenerated)
+        </dt>
+
+        <dd>
+            @if (!Model.IsGenerated)
+            {
+                @Html.ActionLink("Wygeneruj", "GeneratePDF", "UseCaseDiagrams", new { id = Model.ID }, null)
+                <img src="~/Images/diagramPlaceholder.jpg" alt="Placeholder image" width="400px" height="221px" />
+            }
+            else
+            {
+                @Html.ActionLink("Wygeneruj ponownie", "GeneratePDF", "UseCaseDiagrams", new { id = Model.ID }, null) <br />
+                @Html.ActionLink("Download PDF", "DownloadExampleFiles", "UseCaseDiagrams", new { fileName = @pdf }, new { @target = "_blank" })
+                <br />
+                <img src="~/Images/@image" alt="Diagram Schema" /> <br />
+                using (Html.BeginForm("GenerateCustomPNG", "UseCaseDiagrams", FormMethod.Post, new { target = "_blank" }))
+                {
+                    @Html.HiddenFor(model => Model.ID);
+                    <h4> Generate custom width PNG</h4>
+                    <p>
+                       
+                        @Html.Editor("width", new { htmlAttributes = new { @type = "number", @min = "0", @step = "1", @value = "0" } })
+                        <input type="submit" value="Generate" />
+                    </p>
+                }
+            }
+        </dd>
+
+        <dt>
+            @Html.ActionLink("Actors and Use Cases", "Index", "UseCaseActorJoins", new { id = Model.ID }, null)
+        </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Actor (@Html.DisplayFor(model => model.ActorCount))</th>
+                    <th>UseCases (@Html.DisplayFor(model => model.UseCaseCount))</th>
+                </tr>
+                @foreach (var actor in Model.Actors)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(actor.Name, "Details", "Actors", new { id = actor.ID }, null)
+                        </td>
+                        <td>
+                            <ul>
+                                @foreach (var join in actor.UseCaseActorJoins)
+                                {
+                                    <li>
+                                        @Html.DisplayFor(modelItem => join.UseCase.Name)
+                                    </li>
+                                }
+
+                            </ul>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td>
+                        @Html.ActionLink("New Actor", "Create", "Actors", new { id = Model.ID }, null)
+                    </td>
+                    <td>
+                        <ul>
+                            <li>
+                                @Html.ActionLink("New Use Case", "Create", "UseCases", new { id = Model.ID }, null)
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        @Html.ActionLink("New Actor - Use Case assignment", "Create", "UseCaseActorJoins", new { id = Model.ID }, null)
+                    </td>
+                </tr>
+            </table>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActorCount)
+        </dt>
+
+        <dd>
+            @Html.ActionLink(Model.ActorCount + " actors", "Index", "Actors", new { id = Model.ID }, null)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UseCaseCount)
+        </dt>
+
+        <dd>
+            @Html.ActionLink(Model.UseCaseCount + " cases", "Index", "UseCases", new { id = Model.ID }, null)
+            <br />
+            <ul>
+                @foreach (var useCase in Model.UseCases)
+                {
+                    <li>
+                        @Html.ActionLink(useCase.Name, "Details", "UseCases", new { id = useCase.ID }, null)
+                    </li>
+                }
+            </ul>
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

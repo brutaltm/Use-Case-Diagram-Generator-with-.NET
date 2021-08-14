@@ -1,0 +1,51 @@
+﻿@model ProjektBartoszRuta.Models.Actor
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Actor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UseCaseDiagram)
+        </dt>
+
+        <dd>
+            @Html.ActionLink(Model.UseCaseDiagram.Name, "Details", "UseCaseDiagrams", new { id = Model.UseCaseDiagramID }, null)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            Use Cases:
+        </dt>
+
+        <dd>
+            <ul>
+                @foreach (var join in Model.UseCaseActorJoins)
+                {
+                    <li>
+                        @Html.DisplayFor(modelItem => join.UseCase.Name)
+                    </li>
+                }
+                <li>@Html.ActionLink("Assign Use Case", "Create", "UseCaseActorJoins", new { id = Model.UseCaseDiagramID, actor = Model.ID }, null)</li>
+            </ul>
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Delete", "Delete", new { id = Model.ID })
+    @Html.ActionLink("Back to List", "Index")
+</p>

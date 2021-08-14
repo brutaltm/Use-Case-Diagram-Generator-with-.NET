@@ -1,0 +1,45 @@
+﻿@model ProjektBartoszRuta.Models.Profile
+
+@{
+    ViewBag.Title = "Details";
+    var image = Model.Image;
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Profile</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+
+        <dd>
+            @if (image != null && !image.IsEmpty())
+            {
+                <img src="~/Images/@image" alt="Custom image" height="50px" width="50px" />
+            }
+            else
+            {
+                <img src="~/Images/placeholder.png" alt="Placeholder image" height="40px" width="50px" />
+            }
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (User.Identity.Name == Model.UserName)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) 
+    }
+    @Html.ActionLink("Back to List", "Index")
+</p>

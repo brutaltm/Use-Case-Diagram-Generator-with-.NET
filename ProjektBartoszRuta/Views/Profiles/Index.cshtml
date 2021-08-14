@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ProjektBartoszRuta.Models.Profile>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@if (Context.User.IsInRole("Admin"))
+{
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @if (item.Image != null && !item.Image.IsEmpty())
+            {
+                <img src="~/Images/@item.Image" alt="Profile Image" width="50px" height="40px" />
+            }
+            else
+            {
+                <img src="~/Images/placeholder.png" alt="Placeholder image" width="50px" height="40px" />
+            }
+        </td>
+        <td>
+            @if (Context.User.IsInRole("Admin") || Context.User.Identity.Name == item.UserName)
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID })
+            }
+             | 
+            @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+
+            @if (Context.User.IsInRole("Admin") || Context.User.Identity.Name == item.UserName)
+            {
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            }
+            
+        </td>
+    </tr>
+}
+
+</table>

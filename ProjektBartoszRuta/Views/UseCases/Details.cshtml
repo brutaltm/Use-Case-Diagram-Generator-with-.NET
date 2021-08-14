@@ -1,0 +1,59 @@
+﻿@model ProjektBartoszRuta.Models.UseCase
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UseCase</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UseCaseDiagram)
+        </dt>
+
+        <dd>
+            @Html.ActionLink(Model.UseCaseDiagram.Name, "Details", "UseCaseDiagrams", new { id = Model.UseCaseDiagramID }, null)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            Actors:
+        </dt>
+
+        <dd>
+            <ul>
+                @foreach (var join in Model.UseCaseActorJoins)
+                {
+                    <li>
+                        @Html.DisplayFor(modelItem => join.Actor.Name)
+                    </li>
+                }
+                <li>@Html.ActionLink("Assign Actor", "Create", "UseCaseActorJoins", new { id = Model.UseCaseDiagramID, useCase = Model.ID }, null)</li>
+            </ul>
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Delete", "Delete", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

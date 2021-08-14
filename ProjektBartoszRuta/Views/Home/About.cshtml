@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Diagram Statistics";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<table>
+    <tr>
+        <th>
+            ProfileID
+        </th>
+        <th>
+            Diagrams
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ProfileID
+            </td>
+            <td>
+                @item.DiagramCount
+            </td>
+        </tr>
+    }
+</table>
