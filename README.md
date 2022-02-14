@@ -1,6 +1,13 @@
 # Use Case Diagram Generator with .NET
  Use Case Diagram Generator MVC App with .NET C#
 
+  ### App deployed on Azure Cloud:
+  https://projektgeneratordiagramy.azurewebsites.net/ (works really slow)\
+  1. Log in as user:\
+  Login: test2@test2.pl\
+  Password: password\
+  2. Go into diagrams -> details of existing diagram or create new -> add at least 1 actor and 1 use case -> click Wygeneruj (might need to ctrl+F5 to redownload preview image)
+
   ### Overview
  
  Project for my IT studies - subject Advanced Programming (C#).
