@@ -12,6 +12,7 @@ using ProjektBartoszRuta.Models;
 
 namespace ProjektBartoszRuta.Controllers
 {
+    [Authorize]
     public class UseCaseActorJoinsController : Controller
     {
         private ProjectContext db = new ProjectContext();
@@ -76,6 +77,8 @@ namespace ProjektBartoszRuta.Controllers
             {
                 return HttpNotFound();
             }
+            if (useCaseDiagram.ActorCount == 0 || useCaseDiagram.UseCaseCount == 0)
+                return RedirectToAction("Details", "UseCaseDiagrams", new { id = id });
             //ViewBag.UseCaseDiagramID = useCaseDiagram.ID;
             ViewBag.ActorID = actor == null ? new SelectList(useCaseDiagram.Actors, "ID", "Name") : new SelectList(useCaseDiagram.Actors, "ID", "Name", actor);
             ViewBag.UseCaseID = useCase == null ? new SelectList(useCaseDiagram.UseCases, "ID", "Name") : new SelectList(useCaseDiagram.UseCases, "ID", "Name", useCase);

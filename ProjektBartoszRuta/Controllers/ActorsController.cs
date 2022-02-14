@@ -12,6 +12,7 @@ using ProjektBartoszRuta.Models;
 
 namespace ProjektBartoszRuta.Controllers
 {
+    [Authorize]
     public class ActorsController : Controller
     {
         private ProjectContext db = new ProjectContext();

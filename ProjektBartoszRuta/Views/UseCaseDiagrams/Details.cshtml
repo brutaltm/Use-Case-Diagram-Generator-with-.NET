@@ -64,16 +64,16 @@
             }
             else
             {
+                <img src="~/Images/@image" alt="Diagram Schema" /> <br />
                 @Html.ActionLink("Wygeneruj ponownie", "GeneratePDF", "UseCaseDiagrams", new { id = Model.ID }, null) <br />
                 @Html.ActionLink("Download PDF", "DownloadExampleFiles", "UseCaseDiagrams", new { fileName = @pdf }, new { @target = "_blank" })
                 <br />
-                <img src="~/Images/@image" alt="Diagram Schema" /> <br />
                 using (Html.BeginForm("GenerateCustomPNG", "UseCaseDiagrams", FormMethod.Post, new { target = "_blank" }))
                 {
                     @Html.HiddenFor(model => Model.ID);
                     <h4> Generate custom width PNG</h4>
                     <p>
-                       
+
                         @Html.Editor("width", new { htmlAttributes = new { @type = "number", @min = "0", @step = "1", @value = "0" } })
                         <input type="submit" value="Generate" />
                     </p>
@@ -135,6 +135,15 @@
 
         <dd>
             @Html.ActionLink(Model.ActorCount + " actors", "Index", "Actors", new { id = Model.ID }, null)
+            <br />
+            <ul>
+                @foreach (var actor in Model.Actors)
+                {
+                    <li>
+                        @Html.ActionLink(actor.Name, "Details", "Actors", new { id = actor.ID }, null)
+                    </li>
+                }
+            </ul>
         </dd>
 
         <dt>

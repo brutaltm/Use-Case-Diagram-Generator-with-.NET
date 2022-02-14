@@ -15,6 +15,7 @@ using System.Diagnostics;
 namespace ProjektBartoszRuta.Controllers
 {
     public delegate void DiagramDelegate(UseCaseDiagram ucd);
+    [Authorize]
     public class UseCaseDiagramsController : Controller
     {
         public event DiagramDelegate OnCreated;
@@ -232,9 +233,10 @@ namespace ProjektBartoszRuta.Controllers
             var roles = ((ClaimsIdentity)User.Identity).Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
             UseCaseDiagram useCaseDiagram = roles.Contains("Admin") ? db.UseCaseDiagrams.Find(id) : db.UseCaseDiagrams.FirstOrDefault(_ => _.ID == id && _.Profile.UserName == User.Identity.Name);
             if (useCaseDiagram == null)
-            {
                 return HttpNotFound();
-            }
+            if (useCaseDiagram.ActorCount == 0 || useCaseDiagram.UseCaseCount == 0)
+                return RedirectToAction("Details", "UseCaseDiagrams", new { id = id });
+
             var pathPDF = HttpContext.Server.MapPath("~/Images/") + "diagram" + id + ".pdf";
             diagramService.DiagramToPdf(pathPDF, useCaseDiagram);
             diagramService.PdfToPNG(pathPDF, HttpContext.Server.MapPath("~/Images/") + "diagramSmall" + id + ".png", 300, 200);
