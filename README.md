@@ -2,7 +2,7 @@
  Use Case Diagram Generator MVC App with .NET C#
 
   ### App deployed on Azure Cloud:
-  https://projektgeneratordiagramy.azurewebsites.net/ (works really slow)\
+  https://projektgeneratordiagramy.azurewebsites.net/ (works really slow)
   1. Log in as user:\
   Login: test2@test2.pl\
   Password: password
